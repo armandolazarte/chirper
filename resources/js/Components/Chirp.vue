@@ -1,24 +1,24 @@
 <script setup>
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/es';
-import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import Dropdown from '@/Components/Dropdown.vue'
+import DropdownLink from '@/Components/DropdownLink.vue'
+import InputError from '@/Components/InputError.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/es'
+import { useForm } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
-dayjs.extend(relativeTime);
-dayjs.locale("es");
+dayjs.extend(relativeTime)
+dayjs.locale('es')
 
-const props = defineProps(['chirp']);
+const props = defineProps(['chirp'])
 
 const form = useForm({
     message: props.chirp.message,
-});
+})
 
-const editing = ref(false);
+const editing = ref(false)
 </script>
 
 <template>
@@ -45,7 +45,9 @@ const editing = ref(false);
                     <small
                         v-if="chirp.created_at !== chirp.updated_at"
                         class="text-sm text-gray-600"
-                    > &middot; editado</small>
+                    >
+                        &middot; editado
+                    </small>
                 </div>
                 <Dropdown v-if="chirp.user.id === $page.props.auth.user.id">
                     <template #trigger>
@@ -81,7 +83,7 @@ const editing = ref(false);
             </div>
             <form
                 v-if="editing"
-                @submit.prevent="form.put(route('chirps.update', chirp.id), { onSuccess: () => editing = false })"
+                @submit.prevent="form.put(route('chirps.update', chirp.id), { onSuccess: () => (editing = false) })"
             >
                 <textarea
                     v-model="form.message"
@@ -95,14 +97,22 @@ const editing = ref(false);
                     <PrimaryButton class="mt-4">Guardar</PrimaryButton>
                     <button
                         class="mt-4"
-                        @click="editing = false; form.reset(); form.clearErrors()"
-                    >Cancelar</button>
+                        @click="
+                            editing = false
+                            form.reset()
+                            form.clearErrors()
+                        "
+                    >
+                        Cancelar
+                    </button>
                 </div>
             </form>
             <p
                 v-else
                 class="mt-4 text-lg text-gray-900"
-            >{{ chirp.message }}</p>
+            >
+                {{ chirp.message }}
+            </p>
         </div>
     </div>
 </template>
